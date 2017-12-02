@@ -18,10 +18,7 @@ object WordCount {
 
     val wordCounts = words.countByValue()
     for ((word, count) <- wordCounts) println(word + " : " + count)
-<<<<<<< HEAD
-    println("changed for new version 20121201:2015")
-=======
-    println("20171130 version-for branch")
+
 
 
 
@@ -31,6 +28,5 @@ object WordCount {
     /*same as above   */
 //    val counts = words.map(word => (word, 1)).reduceByKey{case (x, y) => x + y}
 //    counts.saveAsTextFile("C:\\Users\\Gloria\\scala-spark-tutorial\\word_count_sample.txt")
->>>>>>> cd66d6e5e83473b3f9b93135641d81583c8964c1
   }
 }
