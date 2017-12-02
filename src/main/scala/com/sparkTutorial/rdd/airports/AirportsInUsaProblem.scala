@@ -28,19 +28,21 @@ object AirportsInUsaProblem {
 
     val airportNameAndCityNames = airportsInUSA.map(line => {
       val splits = line.split(Utils.COMMA_DELIMITER)
-      splits(1) + splits(2)
+      splits(1) + " , " + splits(2)
     })
-
+/*** test : RDD to DF conversion ****/
     println("RDD count : "+airportNameAndCityNames.count())
+    println( "RDD take(2): "+airportNameAndCityNames.take(2).foreach(println))
     /*convert RDD to DataFrame  */
     val sqlContext = new SQLContext(sc)
     import sqlContext.implicits._
     val airportNameAndCityNamesDF = airportNameAndCityNames.toDF()
+
     airportNameAndCityNamesDF.printSchema()  //Schema of DataFrame
     airportNameAndCityNamesDF.show(5)  //DataFrame.show()
+/******* end of test *********/
 
-
-//    airportNameAndCityNames.saveAsTextFile("out\\airports_in_usa_update.text")
+    airportNameAndCityNames.saveAsTextFile("out\\airports_in_usa_update.text")
 //    val airportNameAndCityNames2 = airportsInUSA.map(line =>
 //      line.split(Utils.COMMA_DELIMITER)(1) + line.split(Utils.COMMA_DELIMITER)(2)
 //    )
