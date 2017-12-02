@@ -19,7 +19,7 @@ object AirportsInUsaProblem {
        "Dowagiac Municipal Airport", "Dowagiac"
        ...
      */
-    val conf = new SparkConf().setAppName("airport").setMaster("local[2]")
+    val conf = new SparkConf().setAppName("airport").setMaster("local[2]")  //2core, local[*]: all available core
     val sc = new SparkContext(conf)
     sc.setLogLevel("ERROR") //Remove INFO message during runtime
     val airports = sc.textFile("in\\airports.text")
