@@ -15,6 +15,15 @@ object ReduceExampleSession {
 
     val product = integerRdd.reduce((x,y) => x*y)
     println("product : "+product)
-  }
+    println("*******************************")
+    val inputString = List("This", "That", "Test", "This", "Exercise")
+    val inputStringRdd = spark.sparkContext.parallelize(inputString)
+    val result = inputStringRdd.flatMap(list => list.split(" "))
+      .map(word => (word, 1))
+      .reduceByKey(_+_)
+    println("result : "+result)
+    println(result.foreach(println))
+    //.collect()  //convert RDD to Array
+}
 
 }
