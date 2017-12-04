@@ -15,5 +15,7 @@ object TakeExample {
 
     val words = wordRdd.take(3)
     for (word <- words) println(word)
+    println("-----option2 print each of RDD--------------")
+    words.foreach(x => print(x + " "))
   }
 }
