@@ -27,6 +27,9 @@ object AirportsNotInUsaProblem {
       .getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     val airportsRDD = spark.sparkContext.textFile("in\\airports.text")
+
+    /*1,"Goroka","Goroka","Papua New Guinea","GKA","AYGA",-6.081689,145.391881,5282,10,"U","Pacific/Port_Moresby"
+     * : elements are divided by "," not " " */
     val pairRdd = airportsRDD.map(line => (line.split(Utils.COMMA_DELIMITER)(1), line.split(Utils.COMMA_DELIMITER)(3)) )  //(airportName, country) pair
 //    val pairRdd2 = airportsRDD.map(s => (s.split(" ")(1), s.split(" ")(3)) )  //(IndexOutOfBoundsException error !
     println(pairRdd.first())  //("Goroka","Papua New Guinea")
