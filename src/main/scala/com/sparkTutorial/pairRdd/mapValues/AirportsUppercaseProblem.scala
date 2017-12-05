@@ -33,6 +33,7 @@ object AirportsUppercaseProblem {
     //    val pairRdd2 = airportsRDD.map(s => (s.split(" ")(1), s.split(" ")(3)) )  //(IndexOutOfBoundsException error !
     println(pairRdd.first())  //("Goroka","Papua New Guinea")
     /* Convert value to upperstring using mapValues while Key is same */
+    /* key is not change but value change : RDD.mapValues(value => value.toUpperCase)  */
     val upperRdd = pairRdd.mapValues(countryName => countryName.toUpperCase())
     upperRdd.saveAsTextFile("out\\airports_uppercase.txt")
   }
