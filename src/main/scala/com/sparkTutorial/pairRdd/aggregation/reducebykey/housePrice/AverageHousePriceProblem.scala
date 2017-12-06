@@ -95,8 +95,9 @@ object AverageHousePriceProblem {
       AvgCount(1, line.split(Utils.COMMA_DELIMITER)(2).toDouble)))
     /*reduceByKey : only value */
     val interimRdd2AvgCount = pairRdd2_AvgCount.reduceByKey((v1, v2) =>AvgCount(v1.count + v2.count, v1.total + v2.total))
+   /* mapValues : only value */
+   /*  mapValues preserve key of each element in the previous RDD: recommand to use mapValues over map(change the key)  */
     val finalRdd2_AvgCount = interimRdd2AvgCount.mapValues(avgCount => avgCount.total/avgCount.count)
     for((roomN, price) <- finalRdd2_AvgCount) println(roomN + " : "+ price)
   }
-
 }
