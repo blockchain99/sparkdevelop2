@@ -37,7 +37,7 @@ object SortedWordCountProblem {
       println("-------------- descending order by countNumber using sortByKey()--------------")
       val sortedRdd2 = wordCount.map(x => (x._2, x._1)) // flip (key(word) with value(count)), now (count, word)
       val InterimSortedRdd2 = sortedRdd2.sortByKey(ascending = false)
-      val finalsortedRdd2 = InterimSortedRdd2.map(x => (x._2, x._1))  //convert to original pair (word, count) by flip pair
+      val finalsortedRdd2 = InterimSortedRdd2.map(x => (x._2, x._1))  //flip back pair to (word, count)
       for((word, count)<- finalsortedRdd2) println("***"+word+"::"+count)
 
     }
