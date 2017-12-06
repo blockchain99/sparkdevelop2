@@ -40,8 +40,6 @@ object SortedWordCountProblem {
       val finalsortedRdd2 = InterimSortedRdd2.map(x => (x._2, x._1))  //convert to original pair (word, count) by swap pair
       for((word, count)<- finalsortedRdd2) println("***"+word+"::"+count)
 
-
-
     }
 }
 
