@@ -16,7 +16,9 @@ object AverageHousePriceSolutionSession {
     println("pureRdd.first() :" + pureRdd.first())
     /*(bedRoomNumber.toInt, (1. housePrice.toDouble)) : To sort by hedRoomNumber, it shoud be Int */
     val housePricePairRdd = pureRdd.map(
+      /*Using case class AvgCount(1,  housePrice) = (count, total) */
       line => (line.split(",")(3).toInt, AvgCount(1, line.split(",")(2).toDouble)))
+    /* Using AvgCount type : case class AvgCount(count: Int, total:Double) */
     val housePriceTotal = housePricePairRdd.reduceByKey((x, y) => AvgCount(x.count + y.count, x.total + y.total))
     val resultRdd = housePriceTotal.mapValues(avgCount => avgCount.total/avgCount.count)
 //    for((count, price) <- resultRdd) println(count + " : " + price)
