@@ -84,6 +84,11 @@ object AverageHousePriceProblem {
     println("*** ( bedromm number , average price)****")
     finalRdd2.foreach(println)
 
+    /* using : case class AvgCount(count: Int, total: Double)*/
+    val finalRdd2_1 = interimRdd2.mapValues(avgCount => avgCount._2/avgCount._1)
+    println("Result using : mapValues(avgCount => avgCount._2/avgCount._1) : ")
+    for((roomNumber, price) <- finalRdd2_1.collect) println(roomNumber + ":" + price)
+
   }
 
 }
