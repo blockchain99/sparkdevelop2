@@ -16,6 +16,7 @@ object GroupByKeyVsReduceByKeySession {
   val wordCountsWithReduceByKey = wordsPairRdd.reduceByKey(_+_).collect()  //manipulate values only
   println("wordCountsWithReduceByKey: " + wordCountsWithReduceByKey.toList)
 
+  /*  mapValues preserve key of each element in the previous RDD: recommand to use mapValues over map(change the key)  */
   val wordCountsWithGroupByKey = wordsPairRdd.groupByKey().mapValues(intIterable => intIterable.size).collect()
   println("wordCountsWithGroupByKey: " + wordCountsWithGroupByKey.toList)
 
