@@ -48,7 +48,7 @@ object AverageHousePriceProblem {
 
     //    val pairRdd = pureRdd.map(line => (line.split(Utils.COMMA_DELIMITER)(3),
     //      line.split(Utils.COMMA_DELIMITER)(2)))
-
+    println("================ option1 using groupByKey ==============")
     /*option1 Rdd.map(p => (p.makeKey, p.makeValue))
     using pariRdd.groupByKey() in which pairRdd consists of (key, value)*/
     val pairRdd = pureRdd.map(line => (line.split(Utils.COMMA_DELIMITER)(3),
