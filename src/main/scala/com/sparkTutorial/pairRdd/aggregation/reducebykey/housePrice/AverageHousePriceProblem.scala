@@ -89,6 +89,14 @@ object AverageHousePriceProblem {
     println("Result using : mapValues(avgCount => avgCount._2/avgCount._1) : ")
     for((roomNumber, price) <- finalRdd2_1.collect) println(roomNumber + ":" + price)
 
+    /**************using case class AvgCount (count, total)**********************/
+      /* RDD[(Int, AvgCount)]  */
+    val pairRdd2_AvgCount = pureRdd.map(line => (line.split(Utils.COMMA_DELIMITER)(3).toInt,
+      AvgCount(1, line.split(Utils.COMMA_DELIMITER)(2).toDouble)))
+    /*reduceByKey : only value */
+    val interimRdd2AvgCount = pairRdd2_AvgCount.reduceByKey((v1, v2) =>AvgCount(v1.count + v2.count, v1.total + v2.total))
+    val finalRdd2_AvgCount = interimRdd2AvgCount.mapValues(avgCount => avgCount.total/avgCount.count)
+    for((roomN, price) <- finalRdd2_AvgCount) println(roomN + " : "+ price)
   }
 
 }
