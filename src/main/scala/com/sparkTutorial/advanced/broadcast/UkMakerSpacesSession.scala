@@ -34,6 +34,8 @@ object UkMakerSpacesSession extends Serializable {
     val regions = makerSpaceRdd
                   .filter(line => line.split(Utils.COMMA_DELIMITER, -1)(0) != "Timestamp")  //remove first line
                     .filter(line => getPostPrefix(line).isDefined)  //Some(postcode.split(" ")(0)
+      /*If the already loaded map from uk-postcode.csv  exists(by getPostPrefix function),
+      Get postcode in loaded rdd of postcode file. If not found, return "Unknown"*/
                      .map(line => postCodeMap.value.getOrElse(getPostPrefix(line).get, "Unknown"))
     println("**** region : count Map is as follows : ****")
     for((region, count) <- regions.countByValue()) println(region + " : "+ count)
