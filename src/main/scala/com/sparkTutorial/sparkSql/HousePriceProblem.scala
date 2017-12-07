@@ -59,8 +59,10 @@ object HousePriceProblem {
     println("****** First Grouping location , calculate average price/sqft then print Location-wise, sqft price: orderBy(avg(Price SQ Ft)) ")
     realEstateDF.select(LOCATION, PRICE_SQFT).groupBy(LOCATION).avg(PRICE_SQFT).orderBy("avg(Price SQ Ft)")show()  //ascending
 
+    println("-------- Without .select(LOCATION, PRICE_SQFT)---same as above-------")
+    realEstateDF.groupBy(LOCATION).avg(PRICE_SQFT).orderBy("avg(Price SQ Ft)")show()  //ascending
+
     println("====== without oderBy(avg(Price SQ Ft))")
     realEstateDF.select(LOCATION, PRICE_SQFT).groupBy(LOCATION).avg(PRICE_SQFT).show()
-
   }
 }
