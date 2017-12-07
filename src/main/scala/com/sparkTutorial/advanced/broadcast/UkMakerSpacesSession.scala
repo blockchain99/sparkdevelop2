@@ -24,7 +24,7 @@ object UkMakerSpacesSession extends Serializable {
     spark.sparkContext.setLogLevel("ERROR")
 
 /* load the postcode and broadcast it across the cluster  */
-    val postCodeMap = spark.sparkContext.broadcast(loadPostCodeMap())
+    val postCodeMap = spark.sparkContext.broadcast(loadPostCodeMap()) // Map of poscode->Region
 
     val makerSpaceRdd = spark.sparkContext.textFile("in\\uk-makerspaces-identifiable-data.csv")
     /*load maker space dataset(uk-makerspace-identifiable-data.csv) and call map operation
@@ -36,6 +36,7 @@ object UkMakerSpacesSession extends Serializable {
                     .filter(line => getPostPrefix(line).isDefined)  //Some(postcode.split(" ")(0)
       /*If the already loaded map from uk-postcode.csv  exists(by getPostPrefix function),
       Get postcode in loaded rdd of postcode file. If not found, return "Unknown"*/
+      /* postCodeMap: poscode->Region , so posCodeMap.get return Region*/
                      .map(line => postCodeMap.value.getOrElse(getPostPrefix(line).get, "Unknown"))
     println("**** region : count Map is as follows : ****")
     for((region, count) <- regions.countByValue()) println(region + " : "+ count)
@@ -62,7 +63,7 @@ object UkMakerSpacesSession extends Serializable {
 
   def getPostPrefix(line:String): Option[String] = {
     val splits = line.split(Utils.COMMA_DELIMITER, -1)
-    val postcode = splits(4)  //postcode field is splits(4) in uk-makerspaces-identifiable-data.csv
+    val postcode = splits(4)  //postcode field is splits(4) from uk-makerspaces-identifiable-data.csv
     /* remove blank for postcode, so it returns first element of the postcode field split by blank. */
     if (postcode.isEmpty) None else Some(postcode.split(" ")(0))
   }
