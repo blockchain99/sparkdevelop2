@@ -11,7 +11,8 @@ object StackOverFlowSruveySession {
       .getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
 
-    /*Accumulators are write-only variable, taks on worker nodes cannot access the accumulator's value  */
+    /*spark.sparkContext.longAccumulator : aggregating information across the executors.
+    Accumulators are write-only variable, task on worker nodes cannot access the accumulator's value  */
     val total = spark.sparkContext.longAccumulator
     val missingSalaryMidPoint = spark.sparkContext.longAccumulator
 
