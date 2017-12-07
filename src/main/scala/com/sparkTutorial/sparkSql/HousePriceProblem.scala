@@ -1,5 +1,7 @@
 package com.sparkTutorial.sparkSql
 
+import org.apache.spark.sql.SparkSession
+
 
 object HousePriceProblem {
 
@@ -36,5 +38,29 @@ object HousePriceProblem {
         |................|.................|
         |................|.................|
         |................|.................|
-         */
+        */
+
+  val PRICE_SQFT = "Price SQ Ft"
+  val LOCATION = "Location"
+  def main(args: Array[String]): Unit = {
+    val spark = SparkSession.builder()
+            .appName("HouseLocationAvgPriceSQFT")
+            .master("local[*]")
+            .getOrCreate()
+    spark.sparkContext.setLogLevel("ERROR")
+
+    val realEstateDF = spark.read
+                              .option("header", "true")
+                                .option("inferSchema", value = true)
+                                .csv("in//RealEstate.csv")
+    realEstateDF.printSchema()
+    realEstateDF.show()
+
+    println("****** First Grouping location , calculate average price/sqft then print Location-wise, sqft price: orderBy(avg(Price SQ Ft)) ")
+    realEstateDF.select(LOCATION, PRICE_SQFT).groupBy(LOCATION).avg(PRICE_SQFT).orderBy("avg(Price SQ Ft)")show()  //ascending
+
+    println("====== without oderBy(avg(Price SQ Ft))")
+    realEstateDF.select(LOCATION, PRICE_SQFT).groupBy(LOCATION).avg(PRICE_SQFT).show()
+
+  }
 }
